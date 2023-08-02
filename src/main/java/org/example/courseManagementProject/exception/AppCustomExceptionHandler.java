@@ -1,10 +1,7 @@
 package org.example.courseManagementProject.exception;
 
-import org.example.courseManagementProject.exception.course.CourseDbException;
-import org.example.courseManagementProject.exception.course.CourseServiceException;
-import org.example.courseManagementProject.exception.userexception.RoleDbException;
-import org.example.courseManagementProject.exception.userexception.UserDbException;
-import org.example.courseManagementProject.exception.userexception.UserServiceException;
+import org.example.courseManagementProject.exception.course.CourseException;
+import org.example.courseManagementProject.exception.userexception.UserException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +14,7 @@ import java.util.Date;
 @ControllerAdvice
 public class AppCustomExceptionHandler {
 
-    @ExceptionHandler(value = {UserDbException.class, UserServiceException.class, RoleDbException.class})
+    @ExceptionHandler(value = UserException.class)
     public ResponseEntity <ErrorObject> handleUserDbExceptions(Exception e, WebRequest request){
         ErrorObject errorObject = ErrorObject.builder()
                 .webMessage(request.getDescription(false))
@@ -29,7 +26,7 @@ public class AppCustomExceptionHandler {
 
     }
 
-    @ExceptionHandler(value = {CourseDbException.class, CourseServiceException.class})
+    @ExceptionHandler(value = CourseException.class)
     public ResponseEntity <ErrorObject> handleCourseDbExceptions(Exception e, WebRequest request){
         ErrorObject errorObject = ErrorObject.builder()
                 .webMessage(request.getDescription(false))

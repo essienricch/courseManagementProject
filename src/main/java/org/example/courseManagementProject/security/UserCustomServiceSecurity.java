@@ -1,8 +1,9 @@
 package org.example.courseManagementProject.security;
 
 
+import lombok.AllArgsConstructor;
+import org.example.courseManagementProject.data.model.AppUser;
 import org.example.courseManagementProject.data.model.Role;
-import org.example.courseManagementProject.data.model.User_Entity;
 import org.example.courseManagementProject.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,26 +15,29 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserCustomServiceSecurity  implements UserDetailsService {
+@AllArgsConstructor
+public class UserCustomServiceSecurity {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public UserCustomServiceSecurity(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User_Entity userEntity = userRepository.findUser_EntityByUserName(username);
-        return new User(userEntity.getUserName(), userEntity.getPassword(), mapRolesToAuthority(userEntity.getRoles()));
-    }
-
-    private Collection <GrantedAuthority> mapRolesToAuthority(List <Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//      Optional <AppUser> userEntity = userRepository.findAppUserById(email);
+//      return null;
+////      if (userEntity.isPresent()){
+////          return new User(userEntity.get().getEmailAddress(), userEntity.get().getPassword(), userEntity);
+////
+////        }
+//    }
+//
+//    private Collection <GrantedAuthority> mapRolesToAuthority(Role roles){
+//        return null;
+////        return roles.getClass().getSimpleName();
+////                .stream().map((r) -> new SimpleGrantedAuthority(r.getRoleName())).collect(Collectors.toList());
+//    }
 }

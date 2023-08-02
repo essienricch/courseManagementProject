@@ -3,29 +3,34 @@ package org.example.courseManagementProject.data.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int courseId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @NonNull
-    private String courseName;
+    private String title;
 
-    @NonNull
-    private Integer numberOfStudent;
+    private String description;
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List <Topic> topics = new ArrayList<>();
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Instructor instructor;
+
+    private int enrollmentCount;
+
+    private int duration;
+
+    private String startDate;
+
+    private String endDate;
 
 
-    public Course(int courseId, String courseName, int numberOfStudent) {
-    }
+
+
 }

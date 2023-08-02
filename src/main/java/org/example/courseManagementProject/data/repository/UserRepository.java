@@ -1,12 +1,15 @@
 package org.example.courseManagementProject.data.repository;
 
-import org.example.courseManagementProject.data.model.User_Entity;
+import org.example.courseManagementProject.data.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 
+@Repository
+public interface UserRepository extends JpaRepository <AppUser, Long> {
 
-public interface UserRepository extends JpaRepository <User_Entity, Integer> {
+    AppUser getAppUserByEmail(String email);
 
-    User_Entity findUser_EntityByUserName(String userName);
-    boolean existsByEmailAddress(String emailAddress);
+    Boolean existsByEmail(String email);
 }
